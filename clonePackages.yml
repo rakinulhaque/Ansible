@@ -1,0 +1,21 @@
+---
+- name: CLone Node.js and Python projects
+  hosts: vagrant
+  tasks:
+    
+    - name: Clone Node
+      git:
+        repo: 'https://github.com/learnwithsumit/uptime-monitoring-api-raw-node.git'
+        dest: /home/vagrant/nodeProject
+        clone: yes
+        update: yes
+      become: no
+
+    - name: Clone Python
+      git:
+        repo: 'https://github.com/nowreenrafa22/Hospital-Management-System.git'
+        dest: /home/vagrant/pythonProject
+        clone: yes
+        update: yes
+      become: no
+

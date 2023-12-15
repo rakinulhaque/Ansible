@@ -1,0 +1,38 @@
+---
+- name: Setup Reverse Proxy without changing default file
+  hosts: vagrant
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      become: yes
+
+    - name: Configure Nginx for Node.js
+      template:
+        src: nodejs.conf.j2
+        dest: /etc/nginx/sites-available/nodejs.conf
+
+    - name: Enable Node.js site
+      file:
+        src: /etc/nginx/sites-available/nodejs.conf
+        dest: /etc/nginx/sites-enabled/nodejs.conf
+        state: link
+
+    - name: Configure Nginx for Python
+      template:
+        src: python.conf.j2
+        dest: /etc/nginx/sites-available/python.conf
+
+    - name: Enable Python site
+      file:
+        src: /etc/nginx/sites-available/python.conf
+        dest: /etc/nginx/sites-enabled/python.conf
+        state: link
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+

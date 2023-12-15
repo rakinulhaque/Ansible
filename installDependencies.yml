@@ -1,0 +1,40 @@
+---
+- name: Setup and Run Projects
+  hosts: vagrant
+  tasks:
+    - name: Install Node.js dependencies
+      npm:
+        path: /home/vagrant/nodeProject/
+      become: no
+
+    - name: Install nodemon
+      shell: "npm install nodemon"
+      args:
+        chdir: /home/vagrant/nodeProject/
+
+    - name: Create Python virtual environment
+      command: python3 -m venv /home/vagrant/pythonProject/venv
+
+    - name: Install Django
+      shell: |
+        source /home/vagrant/pythonProject/venv/bin/activate
+        pip install django
+      args:
+        executable: /bin/bash
+
+    - name: Run Node.js project
+      shell: "nohup npm start &"
+      args:
+        chdir: /home/vagrant/nodeProject/
+      async: 60
+      poll: 0
+      become: no
+
+    - name: Run Python project
+      shell: |
+        source /home/vagrant/pythonProject/venv/bin/activate
+        python /home/vagrant/pythonProject/manage.py runserver
+      args:
+        executable: /bin/bash
+      poll: 0
+      become: no

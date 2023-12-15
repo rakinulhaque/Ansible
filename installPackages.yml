@@ -1,0 +1,22 @@
+---
+- name: Install Packages
+  hosts: vagrant
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - git
+        - nodejs
+        - npm
+        - python3
+        - python3-venv
+        - python3-pip
+        - nodemon
+      become: yes

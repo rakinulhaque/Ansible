@@ -1,0 +1,33 @@
+---
+- name: Configure Nginx reverse proxy and subdomain routing using default file
+  hosts: vagrant
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      become: yes
+      
+    - name: Add Node.js subdomain to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "127.0.0.1 node.localhost"
+        state: present
+
+    - name: Add Python subdomain to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: "127.0.0.1 python.localhost"
+        state: present
+
+    - name: Configure Nginx for Node.js and Python reverse proxy
+      template:
+        src: default_file.conf.j2
+        dest: /etc/nginx/sites-available/default
+
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
