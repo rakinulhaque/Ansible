@@ -1,0 +1,24 @@
+---
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Create Python virtual environment
+      command: python3 -m venv /home/vagrant/pythonProject/venv
+
+    - name: Install Django
+      shell: |
+        source /home/vagrant/pythonProject/venv/bin/activate
+        pip install django
+      args:
+        executable: /bin/bash
+    - name: Run Python project
+      shell: |
+        source /home/vagrant/pythonProject/venv/bin/activate
+        nohup python /home/vagrant/pythonProject/manage.py runserver &
+      args:
+        executable: /bin/bash
+      become: no
+
+

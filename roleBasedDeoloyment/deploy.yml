@@ -1,0 +1,22 @@
+---
+- name: Deploy applications
+  hosts: vagrant
+  vars:
+    install_node: true
+    install_python: true
+    install_nginx: true
+    install_packages: true
+
+  roles:
+    - role: packages
+      when: install_packages
+  
+    - role: node
+      when: install_node
+
+    - role: python
+      when: install_python
+
+    - role: nginx
+      when: install_nginx
+

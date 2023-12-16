@@ -1,0 +1,35 @@
+---
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - git
+        - nodejs
+        - npm
+        - python3
+        - python3-venv
+        - python3-pip
+      become: yes
+    - name: Clone Node
+      git:
+        repo: 'https://github.com/learnwithsumit/uptime-monitoring-api-raw-node.git'
+        dest: /home/vagrant/nodeProject
+        clone: yes
+        update: yes
+        force: yes
+      become: no
+
+    - name: Clone Python
+      git:
+        repo: 'https://github.com/nowreenrafa22/Hospital-Management-System.git'
+        dest: /home/vagrant/pythonProject
+        clone: yes
+        update: yes
+        force: yes
+      become: no
