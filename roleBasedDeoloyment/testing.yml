@@ -4,6 +4,11 @@
   become: yes
   tasks:
     - name: Test Reverse Proxy for Node
+      uri:
+        url: http://localhost/node
+        method: GET
+      register: result.status
+    - name: Test Reverse Proxy for Node
       command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
       register: reverse_proxy_node
       changed_when: false
