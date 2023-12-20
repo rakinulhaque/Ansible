@@ -6,16 +6,20 @@
     - name: Test Reverse Proxy for Node
       command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
       register: reverse_proxy_node
+      changed_when: false
 
     - name: Test Reverse Proxy for Python
       command: curl -s -o /dev/null -w "%{http_code}" http://localhost/python
       register: reverse_proxy_python
+      changed_when: false
 
     - name: Test Subdomain Routing for Node
       command: curl -s -o /dev/null -w "%{http_code}" http://node.localhost
       register: subdomain_node
+      changed_when: false
 
     - name: Test Subdomain Routing for Python
       command: curl -s -o /dev/null -w "%{http_code}" http://python.localhost
       register: subdomain_python
+      changed_when: false
 
