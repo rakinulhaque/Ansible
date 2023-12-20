@@ -3,6 +3,10 @@
       apt:
         update_cache: yes
       become: yes
+    
+    - name: Configure dpkg
+      command: dpkg --configure -a
+      become: yes
 
     - name: Packages
       apt:
