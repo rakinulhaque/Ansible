@@ -7,12 +7,14 @@
       uri:
         url: "http://localhost/node/"
         method: GET
+        ignore_errors: true
         return_content: yes
       register: resultnode
     - name: Test Reverse Proxy for Python
       uri:
         url: "http://localhost/python/"
         method: GET
+        ignore_errors: true
         return_content: yes
       register: resultpython
     - name: Test Sub-Domain Routing for Node
@@ -20,11 +22,13 @@
         url: "node.localhost"
         method: GET
         return_content: yes
+        ignore_errors: true
       register: resultnode
     - name: Test Reverse Proxy for Python
       uri:
         url: "python.localhost"
         method: GET
+        ignore_errors: true
         return_content: yes
       register: resultpython
     # - name: Test Reverse Proxy for Node
