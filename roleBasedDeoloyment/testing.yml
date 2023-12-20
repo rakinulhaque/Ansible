@@ -3,35 +3,47 @@
   hosts: vagrant
   become: yes
   tasks:
-    # - name: Test Reverse Proxy for Node
-    #   uri:
-    #     url: "http://localhost/node"
-    #     method: GET
-    #     return_content: yes
-    #   register: resultnode
-    # - name: Test Reverse Proxy for Python
-    #   uri:
-    #     url: "http://localhost/python"
-    #     method: GET
-    #     return_content: yes
-    #   register: resultpython
     - name: Test Reverse Proxy for Node
-      command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
-      register: reverse_proxy_node
-      changed_when: false
-
+      uri:
+        url: "http://localhost/node/"
+        method: GET
+        return_content: yes
+      register: resultnode
     - name: Test Reverse Proxy for Python
-      command: curl -s -o /dev/null -w "%{http_code}" http://localhost/python
-      register: reverse_proxy_python
-      changed_when: false
+      uri:
+        url: "http://localhost/python/"
+        method: GET
+        return_content: yes
+      register: resultpython
+    - name: Test Sub-Domain Routing for Node
+      uri:
+        url: "node.localhost"
+        method: GET
+        return_content: yes
+      register: resultnode
+    - name: Test Reverse Proxy for Python
+      uri:
+        url: "python.localhost"
+        method: GET
+        return_content: yes
+      register: resultpython
+    # - name: Test Reverse Proxy for Node
+    #   command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
+    #   register: reverse_proxy_node
+    #   changed_when: false
 
-    - name: Test Subdomain Routing for Node
-      command: curl -s -o /dev/null -w "%{http_code}" http://node.localhost
-      register: subdomain_node
-      changed_when: false
+    # - name: Test Reverse Proxy for Python
+    #   command: curl -s -o /dev/null -w "%{http_code}" http://localhost/python
+    #   register: reverse_proxy_python
+    #   changed_when: false
 
-    - name: Test Subdomain Routing for Python
-      command: curl -s -o /dev/null -w "%{http_code}" http://python.localhost
-      register: subdomain_python
-      changed_when: false
+    # - name: Test Subdomain Routing for Node
+    #   command: curl -s -o /dev/null -w "%{http_code}" http://node.localhost
+    #   register: subdomain_node
+    #   changed_when: false
+
+    # - name: Test Subdomain Routing for Python
+    #   command: curl -s -o /dev/null -w "%{http_code}" http://python.localhost
+    #   register: subdomain_python
+    #   changed_when: false
 
