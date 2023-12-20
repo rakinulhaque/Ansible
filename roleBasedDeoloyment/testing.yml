@@ -1,0 +1,21 @@
+---
+- name: Test Reverse Proxy and Sub-domain Routing
+  hosts: vagrant
+  become: yes
+  tasks:
+    - name: Test Reverse Proxy for Node
+      command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
+      register: reverse_proxy_node
+
+    - name: Test Reverse Proxy for Python
+      command: curl -s -o /dev/null -w "%{http_code}" http://localhost/python
+      register: reverse_proxy_python
+
+    - name: Test Subdomain Routing for Node
+      command: curl -s -o /dev/null -w "%{http_code}" http://node.localhost
+      register: subdomain_node
+
+    - name: Test Subdomain Routing for Python
+      command: curl -s -o /dev/null -w "%{http_code}" http://python.localhost
+      register: subdomain_python
+
