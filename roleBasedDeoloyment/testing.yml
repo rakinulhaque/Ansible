@@ -19,14 +19,14 @@
       ignore_errors: true
     - name: Test Sub-Domain Routing for Node
       uri:
-        url: "node.localhost"
+        url: "http://node.localhost"
         method: GET
         return_content: yes
       register: resultnode
       ignore_errors: true
     - name: Test Reverse Proxy for Python
       uri:
-        url: "python.localhost"
+        url: "http://python.localhost"
         method: GET
         return_content: yes
       register: resultpython
