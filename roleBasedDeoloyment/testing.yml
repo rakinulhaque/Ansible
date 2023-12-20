@@ -3,18 +3,18 @@
   hosts: vagrant
   become: yes
   tasks:
-    - name: Test Reverse Proxy for Node
-      uri:
-        url: "http://localhost/node"
-        method: GET
-        return_content: yes
-      register: resultnode
-    - name: Test Reverse Proxy for Python
-      uri:
-        url: "http://localhost/python"
-        method: GET
-        return_content: yes
-      register: resultpython
+    # - name: Test Reverse Proxy for Node
+    #   uri:
+    #     url: "http://localhost/node"
+    #     method: GET
+    #     return_content: yes
+    #   register: resultnode
+    # - name: Test Reverse Proxy for Python
+    #   uri:
+    #     url: "http://localhost/python"
+    #     method: GET
+    #     return_content: yes
+    #   register: resultpython
     - name: Test Reverse Proxy for Node
       command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
       register: reverse_proxy_node
