@@ -10,8 +10,6 @@
         return_content: yes
       register: resultnode
       ignore_errors: true
-    - debug: 
-        var: resultnode.stdout
     - name: Test Reverse Proxy for Python
       uri:
         url: "http://localhost/python/"
@@ -19,8 +17,6 @@
         return_content: yes
       register: resultpython
       ignore_errors: true
-    - debug: 
-        var: resultpython.stdout
     - name: Test Sub-Domain Routing for Node
       uri:
         url: "http://node.localhost"
@@ -28,8 +24,6 @@
         return_content: yes
       register: resultSubdomainNode
       ignore_errors: true
-    - debug: 
-        var: resultSubdomainNode.stdout
     - name: Test Reverse Proxy for Python
       uri:
         url: "http://python.localhost"
@@ -37,8 +31,21 @@
         return_content: yes
       register: resultSubdomainPython
       ignore_errors: true
-    - debug: 
-        var: resultSubdomainPython.stdout
+    - name: Output resultnode
+      debug:
+        var: resultnode
+
+    - name: Output resultpython
+      debug:
+        var: resultpython
+
+    - name: Output resultSubdomainNode
+      debug:
+        var: resultSubdomainNode
+
+    - name: Output resultSubdomainPython
+      debug:
+        var: resultSubdomainPython
     # - name: Test Reverse Proxy for Node
     #   command: curl -s -o /dev/null -w "%{http_code}" http://localhost/node
     #   register: reverse_proxy_node
